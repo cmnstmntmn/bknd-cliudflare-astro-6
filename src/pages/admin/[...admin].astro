@@ -1,0 +1,22 @@
+---
+import { Admin } from "bknd/ui";
+import "bknd/dist/styles.css";
+
+import { getApi } from "../../bknd.ts";
+
+const api = await getApi(Astro.request, { mode: "dynamic" });
+const user = api.getUser();
+---
+
+<html>
+    <body>
+        <Admin
+            withProvider={{ user }}
+            config={{
+                basepath: "/admin",
+                logo_return_path: "/../",
+            }}
+            client:only
+        />
+    </body>
+</html>

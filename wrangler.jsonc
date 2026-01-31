@@ -1,0 +1,50 @@
+{
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "name": "astro",
+  "compatibility_date": "2026-01-23",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "data",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "preview_database_id": "local_db",
+    },
+  ],
+  "env": {
+    "development": {
+      "vars": {
+        "cacas": "asda",
+      },
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "data",
+          "database_id": "00000000-0000-0000-0000-000000000000",
+          "preview_database_id": "local_db",
+        },
+      ],
+      "r2_buckets": [
+        {
+          "binding": "BUCKET",
+          "bucket_name": "bucket",
+        },
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "SESSION",
+          "id": "529e0774055144ae84bdbdeb9b3896c6",
+        },
+      ],
+    },
+    "staging": {},
+    "production": {},
+  },
+}
