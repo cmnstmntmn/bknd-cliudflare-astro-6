@@ -56,7 +56,7 @@ export default {
           },
         },
         media: {
-          enabled: false,
+          enabled: true,
           adapter: {
             type: "r2",
             config: {

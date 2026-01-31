@@ -10,7 +10,7 @@
     "bknd:typegen": "bun run bknd types",
     "bknd:sync": "bun run bknd -- sync --force --drop",
     "bknd:setup": "bun run bknd:typegen && bun run bknd:sync",
-    "dev": "bun bknd:setup && wrangler types --env development && CLOUDFLARE_ENV=development astro dev",
+    "dev": "wrangler types --env development && CLOUDFLARE_ENV=development astro dev && bun bknd:setup",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
