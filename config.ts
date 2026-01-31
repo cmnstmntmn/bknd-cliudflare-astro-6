@@ -24,8 +24,6 @@ export default {
   bindings: (env) => ({ db: env.DB }),
   d1: { session: true, transport: "cookie" },
   app: (env) => {
-    console.log("==>", env);
-
     return {
       // in production mode, we use the appconfig.json file as static config
       config: {

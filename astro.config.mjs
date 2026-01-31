@@ -9,6 +9,9 @@ export default defineConfig({
   output: "server",
   integrations: [react()],
   adapter: cloudflare({
+    workerEntryPoint: {
+      path: "src/worker.ts", // our custom entry
+    },
     imageService: "cloudflare",
     sessionKVBindingName: "SESSION",
   }),

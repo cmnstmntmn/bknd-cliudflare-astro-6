@@ -1,14 +1,13 @@
-import type { APIContext } from "astro";
+import type { AstroGlobal } from "astro";
 import { createApp } from "bknd/adapter/cloudflare";
 import config from "../config";
-import type { ApiOptions } from "bknd/client";
 import type { App } from "bknd";
 import { env } from "cloudflare:workers";
 
 export { config };
 
 let app: App;
-export async function getApp(request: APIContext) {
+export async function getApp(ctx: ExecutionContext) {
   if (!app) {
     app = await createApp(
       {
@@ -18,22 +17,21 @@ export async function getApp(request: APIContext) {
           logoReturnPath: "/../",
         },
       },
-      { env, request },
+      { env, ctx },
     );
   }
   return app;
 }
 
 export async function getApi(
-  request: APIContext,
-  options: ApiOptions = {},
-  verify = false,
+  astro: AstroGlobal,
+  opts?: { mode: "static" } | { mode?: "dynamic"; verify?: boolean },
 ) {
-  const app = await getApp(request);
-  const api = app.getApi(options);
-
-  if (verify && options.headers) {
+  const app = await getApp(astro.locals.cfContext);
+  if (opts?.mode !== "static" && opts?.verify) {
+    const api = app.getApi({ headers: astro.request.headers });
     await api.verifyAuth();
+    return api;
   }
-  return api;
+  return app.getApi();
 }

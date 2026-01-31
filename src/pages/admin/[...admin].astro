@@ -4,7 +4,7 @@ import "bknd/dist/styles.css";
 
 import { getApi } from "../../bknd.ts";
 
-const api = await getApi(Astro.request, { mode: "dynamic" });
+const api = await getApi(Astro, { mode: "dynamic" });
 const user = api.getUser();
 ---
 
