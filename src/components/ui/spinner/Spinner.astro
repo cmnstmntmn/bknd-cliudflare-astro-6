@@ -1,0 +1,25 @@
+---
+import { cn } from "@/utils/cn";
+import type { HTMLAttributes } from "astro/types";
+import LoaderCircle from "@lucide/astro/icons/loader-circle";
+
+export interface Props extends HTMLAttributes<"svg"> {
+    size?: "sm" | "default" | "lg";
+}
+
+const { size = "default", class: className, ...props } = Astro.props;
+
+const sizeStyles = {
+    sm: "size-4",
+    default: "size-6",
+    lg: "size-8",
+};
+
+const classes = cn(
+    "animate-spin text-muted-foreground",
+    sizeStyles[size],
+    className,
+);
+---
+
+<LoaderCircle class={classes} {...props} />

@@ -1,5 +1,10 @@
 ---
-
+import "@/styles/global.css";
+import Button from "@/components/ui/button/Button.astro";
+import Spinner from "@/components/ui/spinner/Spinner.astro";
+import { getApi } from "../bknd";
+const api = await getApi(Astro, { system: true });
+const { data } = await api.data.readMany("users");
 ---
 
 <html lang="en">
@@ -12,6 +17,17 @@
         <title>Astro</title>
     </head>
     <body>
-        <h1>Astro!</h1>
+        <h1>Astrowwee</h1>
+        <Button variant="secondary" disabled><Spinner />Ceva</Button>
+
+        <ul role="list" class="link-card-grid">
+            {
+                data.map((todo) => (
+                    <li>
+                        {todo.email} / {todo.id}
+                    </li>
+                ))
+            }
+        </ul>
     </body>
 </html>

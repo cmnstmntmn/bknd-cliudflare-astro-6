@@ -1,53 +1,76 @@
-// import { env } from "cloudflare:workers";
 import { boolean, em, entity, text } from "bknd";
 import type { CloudflareBkndConfig } from "bknd/adapter/cloudflare";
 import { cloudflareImageOptimization } from "bknd/plugins";
-// import { d1 } from "bknd/adapter/cloudflare";
-
 import { secureRandomString } from "bknd/utils";
-// import { env } from "cloudflare:workers";
+import schema from "./src/schema";
 
-const schema = em({
-  todos: entity("todos", {
-    titles: text(),
-    done: boolean(),
-  }),
-});
-
-// register your schema to get automatic type completion
-type Database = (typeof schema)["DB"];
-declare module "bknd" {
-  interface DB extends Database {}
-}
+// // register your schema to get automatic type completion
+// type Database = (typeof schema)["DB"];
+// declare module "bknd" {
+//   interface DB extends Database {}
+// }
 
 export default {
   bindings: (env) => ({ db: env.DB }),
   d1: { session: true, transport: "cookie" },
   app: (env) => {
     return {
-      // in production mode, we use the appconfig.json file as static config
       config: {
-        data: schema.toJSON(),
+        data: {
+          ...schema,
+          default_primary_format: "uuid",
+        },
         server: {
           mcp: {
             enabled: true,
           },
         },
         auth: {
-          enabled: false,
+          enabled: true,
           jwt: {
             issuer: "domzz",
-            secret: secureRandomString(64),
+            secret: "anaaremeresipere",
           },
+          allow_register: false,
           guard: { enabled: true },
           roles: {
-            EDITOR: {
-              is_default: true,
+            SYSTEM: {
+              is_default: false,
               implicit_allow: false,
               permissions: [
-                "system.access.api",
-                "media.file.read",
-                "data.entity.read",
+                {
+                  permission: "system.access.api",
+                },
+                {
+                  permission: "media.file.read",
+                },
+                {
+                  permission: "data.entity.read",
+                },
+                {
+                  permission: "data.entity.create",
+                  policies: [
+                    {
+                      description: "Can create newsletter entries",
+                      condition: {
+                        entity: "newsletter",
+                      },
+                      effect: "allow",
+                    },
+                  ],
+                },
+                {
+                  permission: "data.entity.update",
+                  policies: [
+                    {
+                      description: "Can update newsletter entries",
+                      condition: {
+                        entity: "newsletter",
+                      },
+                      effect: "allow",
+                    },
+                  ],
+                },
               ],
             },
             ADMIN: {
@@ -76,9 +99,6 @@ export default {
       },
       onBuilt: async (app) => {
         console.log("On build");
-
-        //const hono = app.server;
-        //hono.get("/hello", (c) => c.text("Hello from bknd hono route"));
       },
     };
   },

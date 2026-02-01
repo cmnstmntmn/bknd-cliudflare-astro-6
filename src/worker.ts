@@ -1,5 +1,5 @@
 import handler from "@astrojs/cloudflare/entrypoints/server";
-import { serve, d1 } from "bknd/adapter/cloudflare";
+import { serve } from "bknd/adapter/cloudflare";
 import { config } from "./bknd";
 
 // -- Initialize bknd Cloudflare handler

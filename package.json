@@ -10,7 +10,7 @@
     "bknd:typegen": "bun run bknd types",
     "bknd:sync": "bun run bknd -- sync --force --drop",
     "bknd:setup": "bun run bknd:typegen && bun run bknd:sync",
-    "dev": "wrangler types --env development && CLOUDFLARE_ENV=development astro dev && bun bknd:setup",
+    "dev": "wrangler types --env development &&  CLOUDFLARE_ENV=development bun bknd:setup && CLOUDFLARE_ENV=development astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -18,12 +18,19 @@
   "dependencies": {
     "@astrojs/cloudflare": "^13.0.0-beta.3",
     "@astrojs/react": "^4.4.2",
+    "@lucide/astro": "^0.563.0",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "astro": "^6.0.0-beta.6",
     "bknd": "^0.20.0",
+    "clsx": "^2.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.4.0",
     "wrangler": "^4.61.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "tailwindcss": "^4.1.18"
   }
 }

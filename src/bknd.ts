@@ -23,15 +23,17 @@ export async function getApp(ctx: ExecutionContext) {
   return app;
 }
 
-export async function getApi(
-  astro: AstroGlobal,
-  opts?: { mode: "static" } | { mode?: "dynamic"; verify?: boolean },
-) {
+export async function getApi(astro: AstroGlobal, opts: { system: boolean }) {
   const app = await getApp(astro.locals.cfContext);
-  if (opts?.mode !== "static" && opts?.verify) {
-    const api = app.getApi({ headers: astro.request.headers });
-    await api.verifyAuth();
-    return api;
+  if (opts.system) {
+    const systemApi = app.getApi({ token: env.SYSTEM_USER_TOKEN });
+    await systemApi.verifyAuth();
+
+    return systemApi;
   }
-  return app.getApi();
+
+  const api = app.getApi({ headers: astro.request.headers });
+  await api.verifyAuth();
+
+  return api;
 }

@@ -1,0 +1,6 @@
+{
+  "componentsDir": "src/components/ui",
+  "utilsDir": "src/utils",
+  "tailwindConfig": "tailwind.config.mjs",
+  "typescript": true
+}
