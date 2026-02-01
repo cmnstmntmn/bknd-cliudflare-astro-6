@@ -20,6 +20,6 @@ export default {
     }
 
     // -- Return Astro handler
-    return handler.fetch(request, env, ctx);
+    return handler.fetch(request as any, env, ctx);
   },
 } satisfies ExportedHandler<Env>;

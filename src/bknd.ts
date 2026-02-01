@@ -23,7 +23,10 @@ export async function getApp(ctx: ExecutionContext) {
   return app;
 }
 
-export async function getApi(astro: AstroGlobal, opts: { system: boolean }) {
+export async function getApi(
+  astro: AstroGlobal,
+  opts: { system?: boolean } = { system: true },
+) {
   const app = await getApp(astro.locals.cfContext);
   if (opts.system) {
     const systemApi = app.getApi({ token: env.SYSTEM_USER_TOKEN });
